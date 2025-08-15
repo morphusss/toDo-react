@@ -21,7 +21,26 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@Pages/*": [
+        "src/components/Pages/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@svg/*": [
+        "src/assets/svg/*"
+      ],
+      "@images/*": [
+        "src/assets/images/*"
+      ],
+      "@src/*": [
+        "src/*"
+      ],
+    }
   },
   "include": ["src"]
 }
