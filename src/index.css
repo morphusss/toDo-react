@@ -1,6 +1,17 @@
+@font-face {
+  font-family: "Josefin Sans";
+  src: url("./assets/fonts/Josefin_Sans/JosefinSans-VariableFont_wght.ttf");
+}
+
+@font-face {
+  font-family: "Josefin Sans Italic";
+  src: url("./assets/fonts/Josefin_Sans/JosefinSans-Italic-VariableFont_wght.ttf");
+}
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Josefin Sans", "Josefin Sans Italic";
   line-height: 1.5;
+  font-size: 18px;
   font-weight: 400;
 
   font-synthesis: none;
@@ -12,5 +23,6 @@
 * {
  box-sizing: border-box;
  margin: 0;
- padding: 0; 
+
+ --background-color-for-checkbox: linear-gradient(to top left,hsl(280, 87%, 65%), hsl(192, 100%, 67%));
 }
