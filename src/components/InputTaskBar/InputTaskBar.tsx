@@ -2,10 +2,15 @@ import CheckImage from "@svg/icon-check.svg";
 import type React from "react";
 import { useState, type ChangeEvent } from "react";
 import "./InputTaskBar.css";
+import { useTaskStore } from "@src/hooks/Zustand/useTaskStore";
+
+let indexOfTask: number = 0;
 
 export function InputTaskBar() {
   const [taskValue, setTaskValue] = useState("");
   const [isCheckBoxPressed, setIsCheckBoxPressed] = useState(false);
+  const taskList = useTaskStore((state) => state.tasks);
+  const addTasksToList = useTaskStore((state) => state.addTasksToList);
 
   function isCheckBoxPressedHandler() {
     setIsCheckBoxPressed((prev) => !prev);
@@ -18,10 +23,16 @@ export function InputTaskBar() {
 
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === "Enter") {
-      console.log(taskValue);
+      addTasksToList({
+        id: indexOfTask,
+        isComplete: false,
+        taskValue: taskValue,
+      });
+        indexOfTask++;
+      console.log(indexOfTask)
     }
   }
-
+  
   //hover:bg-gradient-to-tl from-purple-400 to-cyan-300
   return (
     <>
