@@ -40,6 +40,9 @@
       "@src/*": [
         "src/*"
       ],
+      "@store/*": [
+        "src/store/*"
+      ],
     }
   },
   "include": ["src"]
