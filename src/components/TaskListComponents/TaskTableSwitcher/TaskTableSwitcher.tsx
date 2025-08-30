@@ -1,8 +1,8 @@
 import { useState } from "react";
-import "./TaskTableSwitcher.css";
 import {
   useTodoActions,
   useTodos,
+  useTodoStore,
   type TaskState,
 } from "@src/store/taskListStore";
 import useScreeSize from "@src/hooks/useScreenSize/useScreenSize";
@@ -47,7 +47,7 @@ function initButtonList(
 export function TaskTableSwitcher() {
   const displaySize = useScreeSize();
   //Call zustand todo list store
-  const todosStore = useTodos();
+  const todosStore = useTodoStore((state) => state.tasks);
   const { updateFilteredList } = useTodoActions();
   const [isAllPressed, setIsAllPressed] = useState(true);
   const [isActivePressed, setIsActivePressed] = useState(false);
@@ -62,7 +62,7 @@ export function TaskTableSwitcher() {
           return !prev;
         });
       }
-      updateFilteredList([]);
+      updateFilteredList(todosStore);
     },
     filterActiveTodos: () => {
       let filteredList: TaskState[] = [];

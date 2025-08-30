@@ -2,11 +2,10 @@ import { CheckboxComponent } from "@components/CheckboxComponent";
 import { useTodoActions } from "@store/taskListStore";
 import type React from "react";
 import { useState, type ChangeEvent } from "react";
-import "./InputTaskBar.css";
 import { calculateIndex } from "./calculateIndex";
 
 export function InputTaskBar() {
-  const { addTodo } = useTodoActions();
+  const { addTodo, addFilterTodo } = useTodoActions();
   const [taskValue, setTaskValue] = useState("");
   const [isInputFieldPressed, setIsInputFieldPressed] = useState(false);
 
@@ -18,6 +17,11 @@ export function InputTaskBar() {
   function handleKeyPress(e: React.KeyboardEvent) {
     if (e.key === "Enter") {
       addTodo({
+        id: calculateIndex(),
+        isComplete: isInputFieldPressed,
+        taskValue: taskValue,
+      });
+      addFilterTodo({
         id: calculateIndex(),
         isComplete: isInputFieldPressed,
         taskValue: taskValue,
@@ -43,7 +47,7 @@ export function InputTaskBar() {
           type="text"
           id="inputTaskField"
           placeholder="Create a new todo..."
-          className="w-full h-full text-sm pl-12"
+          className="w-full h-full text-sm pl-12 text-gray-500"
           onChange={handleInputChange}
           value={taskValue}
         />

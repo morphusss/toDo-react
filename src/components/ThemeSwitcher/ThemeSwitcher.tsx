@@ -1,13 +1,18 @@
-import MoonImg from "@svg/icon-moon.svg";
-import SunImg from "@svg/icon-sun.svg";
+import MoonImg from "@svg/icon-moon.svg?react";
+import SunImg from "@svg/icon-sun.svg?react";
+import { useState } from "react";
 
 export function ThemeSwitcher() {
+  const [isDark, setIsDark] = useState(false);
 
-    return(
-        <>
-        <section className="w-fit h-fit">
-            <img src={SunImg} alt="" />
-        </section>
-        </>
-    )
+  return (
+    <>
+      <button
+        className="w-fit h-fit cursor-pointer"
+        onClick={() => setIsDark((prev) => !prev)}
+      >
+        {isDark ? <MoonImg /> : <SunImg />}
+      </button>
+    </>
+  );
 }

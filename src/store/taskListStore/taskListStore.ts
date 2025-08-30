@@ -7,7 +7,7 @@ export interface TaskState {
 }
 
 interface TodoActions {
-  initialList: (task: TaskState) => void;
+  addFilterTodo: (task: TaskState) => void;
   addTodo: (by: TaskState) => void;
   updateValue: (task_id: number, newValue: string) => void;
   updateStatus: (task_id: number, newValue: boolean) => void;
@@ -25,9 +25,9 @@ export const useTodoStore = create<TaskListState>()((set) => ({
   tasks: [],
   filteredTasks: [],
   actions: {
-    initialList: (task) =>
-      set(() => ({
-        tasks: [task],
+    addFilterTodo: (task) =>
+      set((state) => ({
+        filteredTasks: [...state.filteredTasks, task],
       })),
     addTodo: (by) =>
       set((state) => ({
@@ -36,6 +36,9 @@ export const useTodoStore = create<TaskListState>()((set) => ({
     updateValue: (task_id, newValue) =>
       set((old) => ({
         tasks: old.tasks.map((todo) =>
+          todo.id === task_id ? { ...todo, taskValue: newValue } : todo
+        ),
+        filteredTasks: old.tasks.map((todo) =>
           todo.id === task_id ? { ...todo, taskValue: newValue } : todo
         ),
       })),
@@ -49,9 +52,10 @@ export const useTodoStore = create<TaskListState>()((set) => ({
       set(() => ({
         tasks: list,
       })),
-    updateFilteredList: (list) => set(() => ({
-      filteredTasks: list
-    }))
+    updateFilteredList: (list) =>
+      set(() => ({
+        filteredTasks: list,
+      })),
   },
 }));
 

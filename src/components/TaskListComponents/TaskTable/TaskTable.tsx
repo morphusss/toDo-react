@@ -1,5 +1,4 @@
 import { type TaskState } from "@src/store/taskListStore";
-import "./TaskTable.css";
 import {
   SortableContext,
   verticalListSortingStrategy,
