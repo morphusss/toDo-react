@@ -1,5 +1,4 @@
 import useScreeSize from "@src/hooks/useScreenSize/useScreenSize";
-import "./TableOperatorBlock.css";
 import {
   useTodoActions,
   useTodoStore,
@@ -38,7 +37,9 @@ export function TableOperatorBlock() {
         >
           {`${counter(todosStore)} items left`}
         </section>
-        <section className={`${displaySize.width > 768 ? "w-2/4 h-full" : "hidden"}`}>
+        <section
+          className={`${displaySize.width > 768 ? "w-2/4 h-full" : "hidden"}`}
+        >
           <TaskTableSwitcher />
         </section>
         <section

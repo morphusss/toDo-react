@@ -1,5 +1,5 @@
 import { type Dispatch, type SetStateAction } from "react";
-import CheckImage from "@svg/icon-check.svg";
+import CheckImage from "@svg/icon-check.svg?react";
 import "./CheckboxComponent.css";
 import { useTodoActions } from "@src/store/taskListStore";
 
@@ -13,7 +13,6 @@ export function CheckboxComponent(props: Props) {
   const isPressed = props.isCheckBoxPressed;
   const setIsPressed = props.setIsCheckBoxPressed;
   const { updateStatus } = useTodoActions();
-  // const [isComplete, setIsComplete] = useState(isPressed || false);
 
   function setBackgroundForPressedCheckbox() {
     if (isPressed) {
@@ -51,7 +50,7 @@ export function CheckboxComponent(props: Props) {
             });
           }}
         >
-          {isPressed ? <img src={CheckImage} className="visible" /> : ""}
+          {isPressed ? <CheckImage/> : ""}
         </span>
       </label>
     </>

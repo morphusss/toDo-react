@@ -4,7 +4,6 @@ import MobileLightBg from "@images/bg-mobile-light.jpg";
 import MobileDarkBg from "@images/bg-mobile-dark.jpg";
 import DesktopLightBg from "@images/bg-desktop-light.jpg";
 import DesktopDarkBg from "@images/bg-desktop-dark.jpg";
-import "./MainPage.css";
 import useScreeSize from "@src/hooks/useScreenSize/useScreenSize";
 
 export function MainPage() {

@@ -4,11 +4,11 @@ import {
   useTodos,
   type TaskState,
 } from "@src/store/taskListStore";
-import CrossImage from "@svg/icon-cross.svg";
+import CrossImage from "@svg/icon-cross.svg?react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import "./IndividualTaskBLock.css";
 import { useState } from "react";
+import { TaskValueBlock } from "../TaskValueBlock";
 
 type Props = {
   task: TaskState;
@@ -17,7 +17,7 @@ type Props = {
 export function IndividualTaskBlock({ task }: Props) {
   const id = task.id;
   const todosStore = useTodos();
-  const { updateList } = useTodoActions();
+  const { updateList, updateFilteredList } = useTodoActions();
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
   const [isCheckBoxPressed, setIsCheckBoxPressed] = useState(
@@ -26,7 +26,9 @@ export function IndividualTaskBlock({ task }: Props) {
 
   function deleteTodo(array: TaskState[], todo: TaskState) {
     const correctArray = array.filter((item) => item !== todo);
+    updateFilteredList(correctArray);
     updateList(correctArray);
+    return "";
   }
 
   const style = {
@@ -37,7 +39,7 @@ export function IndividualTaskBlock({ task }: Props) {
   return (
     <>
       <section
-        className="w-full h-12 border-b relative flex items-center"
+        className="w-full h-12 border-b relative flex items-center cursor-grab"
         ref={setNodeRef}
         {...attributes}
         {...listeners}
@@ -50,15 +52,15 @@ export function IndividualTaskBlock({ task }: Props) {
             task_id={id}
           />
         </section>
-        <section className="w-[85%] h-full flex items-center pl-12">
-          {task.taskValue}
+        <section className="w-[85%] h-full flex items-center relative">
+          <TaskValueBlock isCheckBoxPressed={isCheckBoxPressed} task={task} />
         </section>
         <section className="w-[15%] h-full flex justify-center items-center">
           <button
             className="w-fit h-fit p-2.5 bg-transparent border-0"
             onClick={() => deleteTodo(todosStore, task)}
           >
-            <img src={CrossImage} />
+            <CrossImage/>
           </button>
         </section>
       </section>
