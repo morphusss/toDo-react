@@ -1,12 +1,11 @@
 import CheckMarkImage from "@svg/icon-check-mark.svg?react";
 import { CheckboxComponent } from "@components/CheckboxComponent";
-import { useTodoActions, useTodos, useTodoStore } from "@store/taskListStore";
+import { useTodoActions, useTodos } from "@store/taskListStore";
 import type React from "react";
 import { useState, type ChangeEvent } from "react";
 import { calculateIndex } from "@utils/calculateIndex";
 
 export function InputTaskBar() {
-  const todosList = useTodoStore((state) => state.tasks);
   const { addTodo, addFilterTodo } = useTodoActions();
   const [taskValue, setTaskValue] = useState("");
   const [isInputFieldPressed, setIsInputFieldPressed] = useState(false);
