@@ -45,7 +45,7 @@ export function InputTaskBar() {
       isComplete: isInputFieldPressed,
       taskValue: taskValue,
     });
-    localStorage.setItem("ToDoList", `${todosList}`);
+    localStorage.setItem("ToDoList", JSON.stringify(list));
   }
 
   return (
