@@ -3,8 +3,8 @@ import EditImage_white from "@svg/icon-edit-white.svg?react";
 import BinImage from "@svg/icon-delete-bin.svg?react";
 import CheckMarkImage from "@svg/icon-check-mark.svg?react";
 import { useState, type Dispatch, type SetStateAction } from "react";
-import styles from "./EditValueBlock.module.css";
 import { useTodoActions } from "@src/store/taskListStore";
+import verifyTheme from "@src/utils/themeVerification";
 
 type Props = {
   task_id: number;
@@ -18,10 +18,11 @@ export function EditValueBlock(props: Props) {
   const { updateValue } = useTodoActions();
   const [isAdditionalButtonsPressed, setIsAdditionalButtonsPressed] =
     useState(true);
+  const theme = verifyTheme();
 
   function saveButtonHandler() {
     props.setIsEditPressed((prev) => !prev);
-    updateValue(props.task_id, props.localTaskValue)
+    updateValue(props.task_id, props.localTaskValue);
     setIsAdditionalButtonsPressed(false);
   }
 
@@ -49,15 +50,15 @@ export function EditValueBlock(props: Props) {
             <button
               className={`${animationHandler(
                 isAdditionalButtonsPressed
-              )} w-9 h-full flex justify-center items-center cursor-pointer rounded-[5px] shadow-md bg-gray-50`}
+              )} w-9 h-full flex justify-center items-center cursor-pointer rounded-[5px] shadow-md bg-gray-50 dark:bg-[#2a2c42]`}
               onClick={() => saveButtonHandler()}
             >
-              <CheckMarkImage className={styles.check} />
+              <CheckMarkImage />
             </button>
             <button
               className={`${animationHandler(
                 isAdditionalButtonsPressed
-              )} w-9 h-full flex justify-center items-center cursor-pointer rounded-[5px] shadow-md bg-gray-50`}
+              )} w-9 h-full flex justify-center items-center cursor-pointer rounded-[5px] shadow-md bg-gray-50 dark:bg-[#2a2c42]`}
               onClick={() => discardButtonHandler()}
             >
               <BinImage />
@@ -67,10 +68,10 @@ export function EditValueBlock(props: Props) {
           <button
             className={` ${animationHandler(props.isEditAppeared)} ${
               props.isEditAppeared ? "visible" : "hidden"
-            } w-9 h-full flex justify-center items-center cursor-pointer rounded-[5px] shadow-md bg-gray-50`}
+            } w-9 h-full flex justify-center items-center cursor-pointer rounded-[5px] shadow-md bg-gray-50 dark:bg-[#2a2c42]`}
             onClick={() => props.setIsEditPressed((prev) => !prev)}
           >
-            <EditImage />
+            {theme ? <EditImage_white /> : <EditImage />}
           </button>
         )}
       </section>

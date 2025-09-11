@@ -3,13 +3,13 @@ import {
   useTodoActions,
   useTodoStore,
   type TaskState,
-} from "@src/store/taskListStore";
-import { TaskTableSwitcher } from "../TaskTableSwitcher";
+} from "@store/taskListStore";
+import { TaskTableSwitcher } from "@components/TaskListComponents/TaskTableSwitcher";
 
 export function TableOperatorBlock() {
   const todosStore = useTodoStore((state) => state.tasks);
   const displaySize = useScreeSize();
-  const { updateList } = useTodoActions();
+  const { updateList, updateFilteredList } = useTodoActions();
 
   function deleteAllCompleted(list: TaskState[]) {
     let clearedArray: TaskState[] = [];
@@ -17,6 +17,7 @@ export function TableOperatorBlock() {
       if (!list[i].isComplete) clearedArray.push(list[i]);
     }
     updateList(clearedArray);
+    updateFilteredList(clearedArray);
   }
 
   function counter(list: TaskState[]) {
@@ -29,11 +30,11 @@ export function TableOperatorBlock() {
 
   return (
     <>
-      <section className="w-full h-full text-gray-400 flex justify-between">
+      <section className="w-full h-full text-gray-400 dark:text-gray-600 flex justify-between">
         <section
           className={`${
             displaySize.width > 768 ? "w-1/4" : "w-2/4"
-          } flex items-center justify-baseline pl-2.5 text-[13px]`}
+          } flex items-center justify-baseline pl-2.5 text-[13px] hover:text-gray-600 dark:hover:text-gray-300`}
         >
           {`${counter(todosStore)} items left`}
         </section>
@@ -48,7 +49,7 @@ export function TableOperatorBlock() {
           } flex items-center justify-end pr-1.5`}
         >
           <button
-            className="w-fit h-fit text-[13px] p-1.5"
+            className="w-fit h-fit text-[13px] p-1.5 cursor-pointer hover:text-gray-600 dark:hover:text-gray-300"
             onClick={() => deleteAllCompleted(todosStore)}
           >
             {"Clear Completed"}

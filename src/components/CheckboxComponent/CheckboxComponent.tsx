@@ -1,7 +1,8 @@
 import { type Dispatch, type SetStateAction } from "react";
 import CheckImage from "@svg/icon-check.svg?react";
 import "./CheckboxComponent.css";
-import { useTodoActions } from "@src/store/taskListStore";
+import { useTodoActions, useTodos } from "@store/taskListStore";
+import verifyTheme from "@utils/themeVerification";
 
 type Props = {
   isCheckBoxPressed: boolean;
@@ -10,9 +11,11 @@ type Props = {
 };
 
 export function CheckboxComponent(props: Props) {
+  const todoList = useTodos();
   const isPressed = props.isCheckBoxPressed;
   const setIsPressed = props.setIsCheckBoxPressed;
   const { updateStatus } = useTodoActions();
+  const theme = verifyTheme();
 
   function setBackgroundForPressedCheckbox() {
     if (isPressed) {
@@ -24,8 +27,8 @@ export function CheckboxComponent(props: Props) {
     } else {
       return {
         background: "transparent",
-        border: "2px solid #d1d5dc",
-      };
+        border: `2px solid ${theme ? "#393a4c" : "#d1d5dc"}`
+      }
     }
   }
 
@@ -41,13 +44,15 @@ export function CheckboxComponent(props: Props) {
         className="w-5 h-5 flex items-center justify-center"
       >
         <span
-          className="checkbox-inner w-full h-full flex justify-center items-center text-transparent rounded-full cursor-pointer z-20"
+          className="checkbox-inner w-full h-full flex justify-center items-center text-transparent 
+                     rounded-full cursor-pointer z-20 "
           style={setBackgroundForPressedCheckbox()}
           onClick={() => {
             setIsPressed((prev) => {
               updateStatus(props.task_id, !prev);
               return !prev;
             });
+            localStorage.setItem("ToDoList", JSON.stringify(todoList));
           }}
         >
           {isPressed ? <CheckImage/> : ""}

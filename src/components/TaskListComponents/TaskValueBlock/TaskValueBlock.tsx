@@ -24,12 +24,14 @@ export function TaskValueBlock(props: Props) {
     const correctArray = array.filter((item) => item !== todo);
     updateFilteredList(correctArray);
     updateList(correctArray);
+    localStorage.setItem("ToDoList", JSON.stringify(todosStore));
     return "";
   }
-
+  
   function handleValueChange(e: ChangeEvent<HTMLInputElement>) {
     const newValue = e.target.value;
     setLocalTaskValue(newValue);
+    localStorage.setItem("ToDoList", JSON.stringify(todosStore));
   }
 
   return (
@@ -38,9 +40,9 @@ export function TaskValueBlock(props: Props) {
         <section
           className={`${
             props.isCheckBoxPressed
-              ? "line-through text-gray-300"
-              : "visible text-gray-600"
-          } w-full h-full flex items-center pl-12 pb-1.5 pt-1.5 cursor-pointer `}
+              ? "line-through text-gray-300 dark:text-gray-600"
+              : "visible text-gray-600 dark:text-gray-400"
+          } w-full h-full flex items-center pl-12 pb-1.5 pt-1.5 pr-1.5 cursor-pointer text-wrap select-none`}
           onClick={() => {
             // setIsEditPressed((prev) => !prev);
             setIsEditAppeared((prev) => !prev);
@@ -60,7 +62,7 @@ export function TaskValueBlock(props: Props) {
       ) : (
         <>
           <input
-            className="w-full h-full pl-12 flex items-center pb-1.5 pt-1.5"
+            className="w-full h-full pl-12 flex items-center pb-1.5 pt-1.5 pr-1.5 focus:outline-0 text-wrap dark:text-gray-200"
             type="text"
             placeholder="Rewrite todo or keep blank"
             onChange={handleValueChange}

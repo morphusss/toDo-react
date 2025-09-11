@@ -1,11 +1,11 @@
 import { useState } from "react";
 import {
   useTodoActions,
-  useTodos,
   useTodoStore,
   type TaskState,
-} from "@src/store/taskListStore";
+} from "@store/taskListStore";
 import useScreeSize from "@src/hooks/useScreenSize/useScreenSize";
+import verifyTheme from "@utils/themeVerification";
 
 type ActionsListType = {
   showAllTodos: () => void;
@@ -46,12 +46,12 @@ function initButtonList(
 
 export function TaskTableSwitcher() {
   const displaySize = useScreeSize();
-  //Call zustand todo list store
   const todosStore = useTodoStore((state) => state.tasks);
   const { updateFilteredList } = useTodoActions();
   const [isAllPressed, setIsAllPressed] = useState(true);
   const [isActivePressed, setIsActivePressed] = useState(false);
   const [isCompletedPressed, setIsCompletedPressed] = useState(false);
+  const theme = verifyTheme();
 
   const actionsList: ActionsListType = {
     showAllTodos: () => {
@@ -107,7 +107,7 @@ export function TaskTableSwitcher() {
       };
     } else {
       return {
-        color: "hsl(233, 11%, 84%)",
+        color: `${theme ? "hsl(233, 14%, 35%)" : "hsl(233, 11%, 84%)"}`,
       };
     }
   }
@@ -119,13 +119,13 @@ export function TaskTableSwitcher() {
           displaySize.width < 768
             ? "rounded-[5px] shadow-md"
             : " rounded-[0px] shadow-none"
-        } w-full h-full bg-white flex justify-center items-center gap-2 md:gap-1.5`}
+        } w-full h-full bg-white dark:bg-[#25273c] flex justify-center items-center gap-2 md:gap-1.5`}
       >
         {initButtonList(actionsList, statesList).map((item) => (
-          <section className="w-fit h-fit">
+          <section className="w-fit h-fit" key={item.name}>
             <button
-              className="w-fit h-fit p-1 text-[16px] font-bold"
               style={renderFontColor(item.isPressed)}
+              className="w-fit h-fit p-1 text-[16px] font-bold hover:text-gray-600 cursor-pointer"
               onClick={item.action}
             >
               {item.name}

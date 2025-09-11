@@ -14,6 +14,7 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/assets/images'),
       '@src': path.resolve(__dirname, './src'),
       '@store': path.resolve(__dirname, './src/store'),
+      '@utils': path.resolve(__dirname, './src/utils'),
     }
   },
   plugins: [

@@ -21,7 +21,7 @@ export function MainPageBody() {
             <TaskTableSwitcher />
           </section>
         </section>
-        <section className="w-full h-12 flex flex-col justify-center items-center text-gray-400 text-xs font-bold">
+        <section className="w-full h-12 flex flex-col justify-center items-center text-gray-400 dark:text-gray-700 text-xs font-bold">
           <section className="w-fill h-fill">
             Drag and drop to reorder list
           </section>

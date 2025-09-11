@@ -8,7 +8,7 @@ import CrossImage from "@svg/icon-cross.svg?react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
-import { TaskValueBlock } from "../TaskValueBlock";
+import { TaskValueBlock } from "@components/TaskListComponents/TaskValueBlock";
 
 type Props = {
   task: TaskState;
@@ -28,6 +28,7 @@ export function IndividualTaskBlock({ task }: Props) {
     const correctArray = array.filter((item) => item !== todo);
     updateFilteredList(correctArray);
     updateList(correctArray);
+    localStorage.setItem("ToDoList", JSON.stringify(todosStore));
     return "";
   }
 
@@ -39,7 +40,7 @@ export function IndividualTaskBlock({ task }: Props) {
   return (
     <>
       <section
-        className="w-full h-12 border-b relative flex items-center cursor-grab"
+        className="w-full min-h-12 border-b border-gray-300 dark:border-gray-700 relative flex items-center cursor-grab"
         ref={setNodeRef}
         {...attributes}
         {...listeners}
@@ -55,12 +56,12 @@ export function IndividualTaskBlock({ task }: Props) {
         <section className="w-[85%] h-full flex items-center relative">
           <TaskValueBlock isCheckBoxPressed={isCheckBoxPressed} task={task} />
         </section>
-        <section className="w-[15%] h-full flex justify-center items-center">
+        <section className="w-[15%] h-full flex justify-center items-center z-30 bg-transparent">
           <button
             className="w-fit h-fit p-2.5 bg-transparent border-0"
             onClick={() => deleteTodo(todosStore, task)}
           >
-            <CrossImage/>
+            <CrossImage className="cursor-pointer" />
           </button>
         </section>
       </section>
