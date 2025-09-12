@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  useTodoActions,
-  useTodoStore,
-  type TaskState,
-} from "@store/taskListStore";
+import { useTodoActions } from "@store/taskListStore";
 import useScreeSize from "@src/hooks/useScreenSize/useScreenSize";
 import verifyTheme from "@utils/themeVerification";
 
@@ -46,8 +42,7 @@ function initButtonList(
 
 export function TaskTableSwitcher() {
   const displaySize = useScreeSize();
-  const todosStore = useTodoStore((state) => state.tasks);
-  const { updateFilteredList } = useTodoActions();
+  const { updateTableType } = useTodoActions();
   const [isAllPressed, setIsAllPressed] = useState(true);
   const [isActivePressed, setIsActivePressed] = useState(false);
   const [isCompletedPressed, setIsCompletedPressed] = useState(false);
@@ -61,36 +56,28 @@ export function TaskTableSwitcher() {
           setIsCompletedPressed(false);
           return !prev;
         });
+        updateTableType("All");
       }
-      updateFilteredList(todosStore);
     },
     filterActiveTodos: () => {
-      let filteredList: TaskState[] = [];
-      for (let i = 0; i < todosStore.length; i++) {
-        if (!todosStore[i].isComplete) filteredList.push(todosStore[i]);
-      }
       if (!isActivePressed) {
         setIsActivePressed((prev) => {
           setIsAllPressed(false);
           setIsCompletedPressed(false);
           return !prev;
         });
+        updateTableType("Active");
       }
-      updateFilteredList(filteredList);
     },
     filterCompletedTodos: () => {
-      let filteredList: TaskState[] = [];
-      for (let i = 0; i < todosStore.length; i++) {
-        if (todosStore[i].isComplete) filteredList.push(todosStore[i]);
-      }
       if (!isCompletedPressed) {
         setIsCompletedPressed((prev) => {
           setIsAllPressed(false);
           setIsActivePressed(false);
           return !prev;
         });
+        updateTableType("Completed");
       }
-      updateFilteredList(filteredList);
     },
   };
 
@@ -118,7 +105,7 @@ export function TaskTableSwitcher() {
         className={`${
           displaySize.width < 768
             ? "rounded-[5px] shadow-md"
-            : " rounded-[0px] shadow-none"
+            : "rounded-[0px] shadow-none"
         } w-full h-full bg-white dark:bg-[#25273c] flex justify-center items-center gap-2 md:gap-1.5`}
       >
         {initButtonList(actionsList, statesList).map((item) => (

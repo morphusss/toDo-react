@@ -13,17 +13,20 @@ interface TodoActions {
   updateStatus: (task_id: number, newValue: boolean) => void;
   updateList: (list: TaskState[]) => void;
   updateFilteredList: (list: TaskState[]) => void;
+  updateTableType: (to: "All" | "Active" | "Completed") => void;
 }
 
 export interface TaskListState {
   tasks: TaskState[];
   filteredTasks: TaskState[];
+  tableType: "All" | "Active" | "Completed";
   actions: TodoActions;
 }
 
 export const useTodoStore = create<TaskListState>()((set) => ({
   tasks: [],
   filteredTasks: [],
+  tableType: "All",
   actions: {
     addFilterTodo: (task) =>
       set((state) => ({
@@ -55,6 +58,10 @@ export const useTodoStore = create<TaskListState>()((set) => ({
     updateFilteredList: (list) =>
       set(() => ({
         filteredTasks: list,
+      })),
+    updateTableType: (to) =>
+      set(() => ({
+        tableType: to,
       })),
   },
 }));

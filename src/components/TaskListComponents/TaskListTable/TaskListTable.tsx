@@ -15,11 +15,13 @@ import {
   type DragEndEvent,
 } from "@dnd-kit/core";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
-import { EmptyHandler } from "@components/EmptyHandler";
 import { TableOperatorBlock } from "../TableOperatorBlock";
+import { TaskActiveTable } from "../TaskActiveTable";
+import { TaskCompletedTable } from "../TaskCompletedTable";
 
 export function TaskListTable() {
   const filteredTodoStore = useTodoStore((state) => state.filteredTasks);
+  const tableType = useTodoStore((state) => state.tableType);
   const { updateList, updateFilteredList } = useTodoActions();
 
   const sensors = useSensors(
@@ -58,6 +60,32 @@ export function TaskListTable() {
     updateFilteredList(updateTodosPosition(filteredTodoStore));
   }
 
+  function renderCorrectTable(
+    type: "All" | "Active" | "Completed",
+    list: TaskState[]
+  ) {
+    switch (type) {
+      case "All":
+        return (
+          <>
+            <TaskTable todoList={list} />
+          </>
+        );
+      case "Active":
+        return (
+          <>
+            <TaskActiveTable todoList={list} />
+          </>
+        );
+      case "Completed":
+        return (
+          <>
+            <TaskCompletedTable todoList={list} />
+          </>
+        );
+    }
+  }
+
   return (
     <>
       <section className="w-full h-85 md:h-100 bg-white dark:bg-[#25273c] rounded-[5px] shadow-md flex flex-col ">
@@ -67,11 +95,7 @@ export function TaskListTable() {
             onDragEnd={handleDragEnd}
             collisionDetection={closestCorners}
           >
-            {filteredTodoStore.length !== 0 ? (
-              <TaskTable todoList={filteredTodoStore} />
-            ) : (
-              <EmptyHandler />
-            )}
+            {renderCorrectTable(tableType, filteredTodoStore)}
           </DndContext>
         </section>
         <section className="w-full h-13">

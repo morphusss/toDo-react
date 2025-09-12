@@ -4,6 +4,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { IndividualTaskBlock } from "../IndividualTaskBlock";
+import { EmptyHandler } from "@components/EmptyHandler";
 
 type Props = {
   todoList: TaskState[];
@@ -12,16 +13,20 @@ type Props = {
 export function TaskTable({ todoList }: Props) {
   return (
     <>
-      <section className="w-full h-full overflow-y-auto overflow-x-hidden">
-        <SortableContext
-          items={todoList}
-          strategy={verticalListSortingStrategy}
-        >
-          {todoList.map((task) => (
-            <IndividualTaskBlock task={task} key={task.id} />
-          ))}
-        </SortableContext>
-      </section>
+      {todoList.length !== 0 ? (
+        <section className="w-full h-full overflow-y-auto overflow-x-hidden">
+          <SortableContext
+            items={todoList}
+            strategy={verticalListSortingStrategy}
+          >
+            {todoList.map((task) => (
+              <IndividualTaskBlock task={task} key={task.id} />
+            ))}
+          </SortableContext>
+        </section>
+      ) : (
+        <EmptyHandler />
+      )}
     </>
   );
 }

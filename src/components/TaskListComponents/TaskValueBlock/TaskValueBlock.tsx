@@ -42,7 +42,7 @@ export function TaskValueBlock(props: Props) {
             props.isCheckBoxPressed
               ? "line-through text-gray-300 dark:text-gray-600"
               : "visible text-gray-600 dark:text-gray-400"
-          } w-full h-full flex items-center pl-12 pb-1.5 pt-1.5 pr-1.5 cursor-pointer text-wrap select-none`}
+          } w-full h-full flex items-center pl-12 pb-1.5 pt-1.5 pr-1.5 cursor-pointer text-wrap select-none break-all`}
           onClick={() => {
             // setIsEditPressed((prev) => !prev);
             setIsEditAppeared((prev) => !prev);
@@ -62,7 +62,7 @@ export function TaskValueBlock(props: Props) {
       ) : (
         <>
           <input
-            className="w-full h-full pl-12 flex items-center pb-1.5 pt-1.5 pr-1.5 focus:outline-0 text-wrap dark:text-gray-200"
+            className="w-full h-full pl-12 flex items-center pb-1.5 pt-1.5 pr-1.5 focus:outline-0 text-wrap dark:text-gray-200 break-all"
             type="text"
             placeholder="Rewrite todo or keep blank"
             onChange={handleValueChange}
